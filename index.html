@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pioneer Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section id="login" class="p-5">
+        <h2 class="text-center p-5">Welcome to Pioneer bank</h2>
+        <div class="p-5 shadow rounded">
+            <h4>Login</h4>
+            <input class="form-control" type="text" placeholder="Email">
+            <br>
+            <input class="form-control" type="password" placeholder="Password">
+            <br>
+            <button id="inputBtn" class="btn btn-success">Submit</button>
+        </div>
+    </section>
+    <section id="transaction" class="p-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="deposit text-white text-center rounded p-3 m-5 shadow">
+                    <h5>Deposit</h5>
+                    <h2>$ <span id="currentDeposit">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="withdraw text-white text-center rounded p-3 m-5 shadow">
+                    <h5>Withdraw</h5>
+                    <h2>$ <span id="currentWithdraw">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="balance text-white text-center rounded p-3 m-5 shadow">
+                    <h5>Balance</h5>
+                    <h2>$ <span id="currentBalance">1200</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class=" rounded p-5 m-5 shadow">
+                    <h4>Deposit</h4>
+                    <br>
+                    <input id="depositAmount" class="form-control" type="number" placeholder="$ amount you want to withdraw">
+                    <br>
+                    <button id="depositBtn" class="btn btn-success">Deposit</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class=" rounded p-5 m-5 shadow">
+                    <h4>Withdraw</h4>
+                    <br>
+                    <input id="withdrawAmount" class="form-control" type="number" placeholder="$ amount you want to withdraw">
+                    <br>
+                    <button id="withdrawBtn" class="btn btn-success">Withdraw</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        // login button event handler
+        var inputBtn = document.getElementById('inputBtn');
+        inputBtn.addEventListener('click', function(){
+            var loginArea = document.getElementById('login');
+            loginArea.style.display = 'none';
+
+            var transactionArea = document.getElementById('transaction');
+            transactionArea.style.display = 'block';
+        })
+
+        // deposit button event handler
+        var depositBtn = document.getElementById('depositBtn');
+        depositBtn.addEventListener('click', function(){
+            var depositAmountNum = getInputNumber('depositAmount');
+            
+            updateSpanText('currentDeposit', depositAmountNum);
+
+            document.getElementById('depositAmount').value = '';
+
+            updateSpanText('currentBalance', depositAmountNum);
+        })
+
+        // withdraw button event handler
+        var withdrawBtn = document.getElementById('withdrawBtn');
+        withdrawBtn.addEventListener('click', function(){
+            var withdrawAmountNum = getInputNumber('withdrawAmount');
+
+            updateSpanText('currentWithdraw', withdrawAmountNum);
+
+            document.getElementById('withdrawAmount').value = '';
+
+            updateSpanText('currentBalance', -1 * withdrawAmountNum);
+        })
+
+        function getInputNumber(id){
+            var Amount = document.getElementById(id).value;
+            var AmountNum = parseFloat(Amount);
+            return AmountNum;
+        }
+
+        function updateSpanText(id, depositAmountNum){
+            var current = document.getElementById(id).innerText;
+            var currentNum = parseFloat(current);
+            var totalAmount = currentNum + depositAmountNum;
+            document.getElementById(id).innerText = totalAmount;
+        }
+    </script>
+</body>
+</html>
